@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF File List and Submission</title>
+</head>
+<body>
+    <h1>Submit a PDF URL</h1>
+    <form action="{{ url_for('index') }}" method="POST">
+        <label for="url">Enter PDF URL:</label>
+        <input type="url" id="url" name="url" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    <h2>Processed PDF Files</h2>
+    {% if pdf_files %}
+    <ul>
+    {% for pdf in pdf_files %}
+        <li>
+            <strong>{{ pdf.filename }}</strong>
+            <ul>
+                <li>Number of pages: {{ pdf.pages }}</li>
+                <li>Number of images: {{ pdf.images }}</li>
+                <li>Number of audio files: {{ pdf.audio }}</li>
+                <li>Number of video files: {{ pdf.video }}</li>
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>No PDFs found in the specified folder.</p>
+    {% endif %}
+</body>
+</html>
